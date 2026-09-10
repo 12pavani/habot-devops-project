@@ -1,0 +1,10 @@
+[
+  {"name": "student_id", "type": "STRING", "mode": "REQUIRED", "description": "Unique student identifier"},
+  {"name": "parent_id", "type": "STRING", "mode": "REQUIRED", "description": "Unique parent/guardian identifier"},
+  {"name": "student_age", "type": "INTEGER", "mode": "REQUIRED", "description": "Student age, valid range 3-18"},
+  {"name": "has_diagnosed_support_need", "type": "BOOLEAN", "mode": "REQUIRED", "description": "DCYN flag: diagnosed learning support need on file"},
+  {"name": "consent_data_sharing", "type": "BOOLEAN", "mode": "REQUIRED", "description": "DCYN flag: parent consented to data sharing"},
+  {"name": "region", "type": "STRING", "mode": "REQUIRED", "description": "Region code, used for row-level security filtering"},
+  {"name": "submitted_at", "type": "TIMESTAMP", "mode": "REQUIRED", "description": "Form submission timestamp"},
+  {"name": "ingested_at", "type": "TIMESTAMP", "mode": "REQUIRED", "description": "Pipeline ingestion timestamp"}
+]

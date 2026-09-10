@@ -1,0 +1,19 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+.terraform.lock.hcl
+
+# Credentials — never commit these
+*.json
+!terraform/schemas/*.json
+service-account*.json
+*.pem
+*.key
+
+# OS
+.DS_Store

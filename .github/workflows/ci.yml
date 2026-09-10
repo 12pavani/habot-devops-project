@@ -1,0 +1,90 @@
+name: Poka-Yoke Build Gate
+
+# Fail-closed by design: every job below is a required status check.
+# If any step fails, the workflow fails, and (with branch protection
+# rules enabled on `main`) the PR cannot be merged — there is no
+# manual override path, which is the point.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  secret-scan:
+    name: Secret scan (fail-closed)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # gitleaks needs full history, not just the latest commit
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITLEAKS_CONFIG: .gitleaks.toml
+        # No continue-on-error, no soft-fail flag: any detected secret
+        # halts the job immediately. This step existing is the whole
+        # point of Task 2 — it can't be optional.
+
+      - name: Quarantine on detection
+        if: failure()
+        run: |
+          echo "::error::Hardcoded secret detected. Build quarantined — do not merge."
+          echo "QUARANTINED=true" >> "$GITHUB_ENV"
+
+  python-lint:
+    name: Python lint & format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install linters
+        run: pip install black==24.8.0 flake8==7.1.1
+
+      - name: Check formatting (black)
+        run: black --check --diff django/
+
+      - name: Lint (flake8)
+        run: flake8 django/ --max-line-length=100
+
+  terraform-validate:
+    name: Terraform format & validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.0"
+
+      - name: Terraform fmt check
+        run: terraform -chdir=terraform fmt -check -recursive
+
+      - name: Terraform init (no backend, validate only)
+        run: terraform -chdir=terraform init -backend=false
+
+      - name: Terraform validate
+        run: terraform -chdir=terraform validate
+
+  build-gate-summary:
+    name: Build gate result
+    needs: [secret-scan, python-lint, terraform-validate]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Evaluate gate
+        run: |
+          if [ "${{ contains(needs.*.result, 'failure') }}" = "true" ]; then
+            echo "::error::One or more Poka-Yoke checks failed. Build is quarantined, not deployed."
+            exit 1
+          fi
+          echo "All checks passed — build is eligible to proceed."

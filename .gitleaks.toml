@@ -1,0 +1,26 @@
+title = "Habot staging assessment secret scan config"
+
+[extend]
+# Start from gitleaks' default, well-maintained rule set (AWS keys,
+# generic API keys, private keys, etc.) rather than reinventing pattern
+# matching for every credential type.
+useDefault = true
+
+[[rules]]
+id = "gcp-service-account-key"
+description = "GCP service account JSON key committed to the repo"
+regex = '''"type":\s*"service_account"'''
+tags = ["gcp", "credentials"]
+
+[[rules]]
+id = "django-secret-key"
+description = "Hardcoded Django SECRET_KEY"
+regex = '''SECRET_KEY\s*=\s*['"][^'"]{20,}['"]'''
+tags = ["django", "credentials"]
+
+[allowlist]
+description = "Files that legitimately contain example/placeholder values only"
+paths = [
+  '''terraform/terraform\.tfvars\.example''',
+  '''django/onboarding/sample_payload\.json''',
+]

@@ -1,0 +1,7 @@
+project_id                 = "your-gcp-project-id"
+region                      = "us-central1"
+environment                 = "staging"
+ingestion_service_account   = "ingestion-sa@your-gcp-project-id.iam.gserviceaccount.com"
+pipeline_service_account    = "pipeline-sa@your-gcp-project-id.iam.gserviceaccount.com"
+analyst_group               = "analysts@habot.io"
+access_expiry               = "2026-12-31T23:59:59Z"
