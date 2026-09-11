@@ -5,6 +5,7 @@ from django.db import models
 # A closed choice set instead of a free-text field is itself a
 # mistake-proofing control: it's impossible to onboard a student into
 # a region the RLS policy doesn't know about.
+
 REGION_CHOICES = [
     ("dubai", "Dubai"),
     ("abu_dhabi", "Abu Dhabi"),
