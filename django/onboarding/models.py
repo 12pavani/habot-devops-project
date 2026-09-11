@@ -1,7 +1,5 @@
 from django.db import models
 
-SECRET_KEY = "sk_live_fake1234567890abcdef"
-
 # Fixed region list — matches the analyst_region_map used by the
 # row-level security policy in terraform/policies/rls_policies.sql.
 # A closed choice set instead of a free-text field is itself a
