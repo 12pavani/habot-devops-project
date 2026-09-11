@@ -1,8 +1,8 @@
 # Habot Connect — Junior Cloud & DevOps Engineer Hiring Project
 
-**Candidate:** Vislavath Pavani
-**Email:** vislavathpavani5123@gmail.com
-**Phone:** 6009129509
+**Candidate:** Vislavath Pavani<br>
+**Email:** vislavathpavani5123@gmail.com<br>
+**Phone:** 6009129509<br>
 **Submitted:** 11 September 2026
 
 ## 1. What this project is
