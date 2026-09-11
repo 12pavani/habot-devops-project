@@ -7,6 +7,7 @@ from onboarding.serializers import StudentOnboardingSerializer
 
 FIXTURES = json.loads((Path(__file__).parent / "sample_payload.json").read_text())
 
+
 def test_valid_payload_passes():
     serializer = StudentOnboardingSerializer(data=FIXTURES["valid_example"])
     assert serializer.is_valid(), serializer.errors
