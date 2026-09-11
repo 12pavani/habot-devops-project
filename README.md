@@ -3,13 +3,7 @@
 **Candidate:** Vislavath Pavani
 **Email:** vislavathpavani5123@gmail.com
 **Phone:** 6009129509
-<<<<<<< HEAD
 **Submitted:** 11 September 2026
-=======
-**Submitted:** 13 sept 2026
->>>>>>> cc5e8a8259a22b649b2dd9c06bb753ad9fefae4b
-
----
 
 ## 1. What this project is
 
