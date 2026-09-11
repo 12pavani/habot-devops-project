@@ -186,6 +186,14 @@ Once pushed, go to the **Actions** tab on GitHub — you should see the
 5. Remove the fake secret, commit again, push — watch it turn green.
    Screenshot this too.
 
+### Build Gate Results
+
+#### Failed Build
+![Failed Build](./Failed.png)
+
+#### Successful Build
+![Successful Build](./Success.png)
+
 Those two screenshots are your evidence for the brief's requirement to
 "demonstrate how your automated build gate successfully triggers a
 Fail-Closed status."
